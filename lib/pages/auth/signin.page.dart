@@ -20,7 +20,7 @@ class SigninPage extends StatelessWidget {
   Future<void> _signin(BuildContext context, String username, String password) async {
     try {
       AuthToken authToken = await ChallengeHolicApiService.get.localSignin(username, password);
-      await LocalDatabaseHelper.get.storeRefreshToken(authToken.refresh!);
+      await LocalDatabaseHelper.get.storeTokens(authToken.access!, authToken.refresh!);
       context.pop();
     } on Exception catch(ex) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

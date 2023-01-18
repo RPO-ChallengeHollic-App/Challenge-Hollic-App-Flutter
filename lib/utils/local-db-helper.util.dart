@@ -8,7 +8,7 @@ class LocalDatabaseHelper {
   LocalDatabaseHelper._internal();
 
   static const String _tableName = "user";
-  static const String _dbFileName = "local_user_db.db";
+  static const String _dbFileName = "tokens_db.db";
 
   static final LocalDatabaseHelper _localDbHelper = LocalDatabaseHelper._internal(); // Create a single instance
   late final Database _database;
@@ -34,7 +34,8 @@ class LocalDatabaseHelper {
           '''
             CREATE TABLE $_tableName (
               id AUTO INCREMENT PRIMARY KEY,
-              refresh_token TEXT NOT NULL
+              refresh_token TEXT NOT NULL,
+              access_token TEXT NOT  NULL
             );
           '''
         );
@@ -43,22 +44,22 @@ class LocalDatabaseHelper {
     _isInit = true;
   }
   
-  Future<void> storeRefreshToken(String token) async {
+  Future<void> storeTokens(String access, String refresh) async {
 
     Database database =  await _getDatabase();
     final oldToken = await getToken();
     if (oldToken == null) {
-      await database.rawInsert("INSERT INTO $_tableName (refresh_token) VALUES(?);", [token]);
+      await database.rawInsert("INSERT INTO $_tableName (access_token, refresh_token) VALUES(?);", [access, refresh]);
     } else {
-      await database.rawUpdate("UPDATE $_tableName SET refresh_token = ?", [token]);
+      await database.rawUpdate("UPDATE $_tableName SET refresh_token = ?, access_token = ?", [refresh, access]);
     }
   }
   
-  Future<String?> getToken() async {
+  Future<Map<String, dynamic>?> getToken() async {
     Database database =  await _getDatabase();
     final result = await database.rawQuery("SELECT * FROM $_tableName");
-    if (result.length > 0) {
-      return result.first['refresh_token'] as String;
+    if (result.isNotEmpty) {
+      return result.first;
     }
     return null;
   }

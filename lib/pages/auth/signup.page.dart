@@ -62,7 +62,7 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> _signup(BuildContext context, String username, String email, String password, File? profile) async {
     try {
       AuthToken authToken = await ChallengeHolicApiService.get.localSingup(username, email, password, profile);
-      await LocalDatabaseHelper.get.storeRefreshToken(authToken.refresh!);
+      await LocalDatabaseHelper.get.storeTokens(authToken.access!, authToken.refresh!);
       context.pop();
     } on Exception catch(ex) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
