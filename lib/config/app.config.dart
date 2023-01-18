@@ -16,7 +16,7 @@ class AppConfig {
               routes: [
                 GoRoute(
                   path: 'signin',
-                  builder: (context, state) => const SigninPage(),
+                  builder: (context, state) => SigninPage(),
                 ),
                 GoRoute(
                   path: 'signup',

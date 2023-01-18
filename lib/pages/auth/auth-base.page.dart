@@ -8,19 +8,24 @@ class AuthBasePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _screenHeight = MediaQuery.of(context).size.height;
-    return Material(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(// alignment: Alignment.topCenter,
-            children: [
-              ...children,
-              Container(
-                height: _screenHeight * 0.1,
-              )
-            ],
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Material(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: SafeArea(
+              child: Column(// alignment: Alignment.topCenter,
+                children: [
+                  ...children,
+                  Container(
+                    height: screenHeight * 0.1,
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
+      ),
     );
   }
 

@@ -1,0 +1,4 @@
+#Wed Jan 18 17:03:50 CET 2023
+base.0=/Users/aljazkokol/Desktop/Challenge-Hollic-App-Flutter/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
